@@ -36,6 +36,26 @@ public:
 
 #pragma pop()
 
+struct T
+{
+    enum { int_t, float_t } type;
+ 
+    template<typename Integer,
+             std::enable_if_t<std::is_integral<Integer>::value, bool> = true>
+    T(Integer) : type(int_t) {}
+ 
+    template<typename Floating,
+             std::enable_if_t<std::is_floating_point<Floating>::value, bool> = true>
+    T(Floating) : type(float_t) {
+
+    } // OK
+};
+
+template<typename InputIt, typename OutputIt>
+void test(InputIt& it, OutputIt& out){
+    
+}
+
 template <typename InputIt, typename OutputIt>
 void copy(InputIt inputHead, InputIt inputTail, OutputIt outputHead, OutputIt outputTail) {
     std::size_t alignIn = alignof(typename InputIt::value_type);
